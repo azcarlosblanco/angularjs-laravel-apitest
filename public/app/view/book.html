@@ -1,0 +1,121 @@
+
+
+<div class="panel-heading">
+    <a href="" class="thumb">
+        <button class="btn btn-primary" ng-click="toggle('add',0)" type="button"> Add</button>
+    </a>
+
+</div>
+
+{{ datas.users }}
+<table class="table table-bordered">
+    <td ng-repeat="column in datas.column_name">{{ column }}</td>
+    <tr ng-repeat="data in datas.data">
+        <td>{{ data.id }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.author_id }}</td>
+        <td>{{ data.genre_id }}</td>
+        <td>{{ data.publish_date }}</td>
+        <td>
+            <button class="btn btn-info" ng-click="toggle('edit', data.id)"> Edit</button>
+            <button class="btn btn-danger" ng-click="cfmDelete(data.id)"> Delete</button>
+        </td>
+    </tr>
+</table>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">{{form_title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form name="frmbook" class="form-horizontal" novalidate="">
+                    <div class="form-group error">
+                        <label class="col-sm-3 control-label">Name</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control has-error" id="name" name="name"
+                                   placeholder="Fullname" value="{{name}}"
+                                   ng-model="data.name" ng-required="true">
+                                        <span class="help-inline"
+                                              ng-show="frmbook.name.$invalid && frmbook.name.$touched">name field is required</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Description</label>
+
+                        <div class="col-sm-9">
+                            <input class="form-control" id="description" name="description" placeholder="Description"
+                                   value="{{description}}"
+                                   ng-model="data.description" ng-required="true">
+                                        <span class="help-inline"
+                                              ng-show="frmbook.description.$invalid && frmbook.description.$touched">description field is required</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-sm-3 control-label">Author Id</label>
+
+                        <div class="col-sm-9">
+                            <!--<input type="text" class="form-control" id="author_id" name="author_id"-->
+                            <!--placeholder="Author id" value="{{author_id}}"-->
+                            <!--ng-model="data.author_id" ng-required="true">-->
+                            <!--<span class="help-inline"-->
+                            <!--ng-show="frmbook.author_d.$invalid && frmbook.author_id.$touched"> field is required</span>-->
+                            <select ng-model="data.author_id" class="form-control" id="author_id" name="author_id">
+                                <option selected value="{{author_id}}" ng-model="data.author_id">
+                                    {{ data.author.name }}
+                                </option>
+                                <option ng-repeat="author in authors" value="{{ author.id }}">{{ author.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Genre Id</label>
+
+                        <div class="col-sm-9">
+                            <!--<input type="text" class="form-control" id="genre_id" name="genre_id" placeholder="Genre Id"-->
+                            <!--value="{{genre_id}}"-->
+                            <!--ng-model="data.genre_id" ng-required="true">-->
+                            <!--<span class="help-inline"-->
+                            <!--ng-show="frmbook.genre_id.$invalid && frmbook.genre_id.$touched"> field is required</span>-->
+                            <select ng-model="data.genre_id" class="form-control" id="genre_id" name="genre_id">
+
+                                <option selected value="{{genre_id}}" ng-model="data.genre_id">
+                                    {{ data.genre.name }}
+                                </option>
+                                <option ng-repeat="genre in genres" value="{{ genre.id }}">{{ genre.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Publish date</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="publish_date" name="publish_date"
+                                   placeholder="publish date" value="{{publish_date}}"
+                                   ng-model="data.publish_date" ng-required="true">
+                                    <span class="help-inline"
+                                          ng-show="frmbook.publish_date.$invalid && frmbook.publish_date.$touched"> field is required</span>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btn-save" ng-click="save(state, id)"
+                        ng-disabled="frmbook.$invalid">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
